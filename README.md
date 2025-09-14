@@ -39,6 +39,7 @@ Visit [http://localhost:3000](http://localhost:3000) to see your stock portfolio
 - **Multi-Exchange Support**: NSE, BSE, NASDAQ, NYSE, and international markets
 - **P&L Calculations**: Automatic profit/loss calculations with color coding
 - **Portfolio Weights**: View each holding's percentage of total portfolio value for better asset allocation insights
+- **Advanced Sorting**: Sort holdings by Weight, P&L, or P&L% in ascending/descending order with visual indicators
 
 ### 🎨 User Interface
 

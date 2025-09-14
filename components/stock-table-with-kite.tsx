@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import { Plus, RefreshCw, Wallet, TrendingUp, AlertTriangle } from "lucide-react"
+import { Plus, RefreshCw, Wallet, TrendingUp, AlertTriangle, ChevronUp, ChevronDown } from "lucide-react"
 
 // TypeScript interface for stock data
 export interface Stock {
@@ -94,6 +94,72 @@ export function StockTableWithKite() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [tickerInput, setTickerInput] = useState("")
   const [activeTab, setActiveTab] = useState("manual")
+  const [sortField, setSortField] = useState<'weight' | 'pnl' | 'pnlPercent' | null>(null)
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
+
+  // Function to handle sorting
+  const handleSort = (field: 'weight' | 'pnl' | 'pnlPercent') => {
+    if (sortField === field) {
+      // Toggle direction if same field
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
+    } else {
+      // Set new field with default descending
+      setSortField(field)
+      setSortDirection('desc')
+    }
+  }
+
+  // Function to sort holdings
+  const getSortedHoldings = () => {
+    if (!sortField) return kiteHoldings
+
+    return [...kiteHoldings].sort((a, b) => {
+      let aValue = a[sortField]
+      let bValue = b[sortField]
+
+      if (sortDirection === 'asc') {
+        return aValue - bValue
+      } else {
+        return bValue - aValue
+      }
+    })
+  }
+
+  // Sortable header component
+  const SortableHeader = ({ 
+    field, 
+    children, 
+    className = "" 
+  }: { 
+    field: 'weight' | 'pnl' | 'pnlPercent'
+    children: React.ReactNode
+    className?: string 
+  }) => (
+    <TableHead 
+      className={`cursor-pointer hover:bg-muted/50 select-none ${className}`}
+      onClick={() => handleSort(field)}
+    >
+      <div className="flex items-center gap-1">
+        {children}
+        <div className="flex flex-col">
+          <ChevronUp 
+            className={`h-3 w-3 ${
+              sortField === field && sortDirection === 'asc' 
+                ? 'text-blue-600' 
+                : 'text-gray-300'
+            }`} 
+          />
+          <ChevronDown 
+            className={`h-3 w-3 -mt-1 ${
+              sortField === field && sortDirection === 'desc' 
+                ? 'text-blue-600' 
+                : 'text-gray-300'
+            }`} 
+          />
+        </div>
+      </div>
+    </TableHead>
+  )
 
   // Function to fetch stock price from our API
   const fetchStockPrice = async (ticker: string): Promise<{ price: number; error?: string; data?: any }> => {
@@ -488,6 +554,23 @@ export function StockTableWithKite() {
 
                   {/* Holdings Table */}
                   <div className="overflow-x-auto">
+                    {sortField && (
+                      <div className="mb-3 text-sm text-muted-foreground flex items-center gap-2">
+                        <span>Sorted by:</span>
+                        <Badge variant="outline" className="text-xs">
+                          {sortField === 'pnl' ? 'P&L' : 
+                           sortField === 'pnlPercent' ? 'P&L %' : 
+                           'Weight'} 
+                          {sortDirection === 'desc' ? ' ↓' : ' ↑'}
+                        </Badge>
+                        <button 
+                          onClick={() => setSortField(null)}
+                          className="text-xs text-blue-600 hover:underline"
+                        >
+                          Clear sort
+                        </button>
+                      </div>
+                    )}
                     <Table>
                       <TableHeader>
                         <TableRow>
@@ -496,13 +579,13 @@ export function StockTableWithKite() {
                           <TableHead>Avg Price</TableHead>
                           <TableHead>Current Price</TableHead>
                           <TableHead>Value</TableHead>
-                          <TableHead>P&L</TableHead>
-                          <TableHead>P&L %</TableHead>
-                          <TableHead>Weight</TableHead>
+                          <SortableHeader field="pnl">P&L</SortableHeader>
+                          <SortableHeader field="pnlPercent">P&L %</SortableHeader>
+                          <SortableHeader field="weight">Weight</SortableHeader>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {kiteHoldings.map((holding) => (
+                        {getSortedHoldings().map((holding) => (
                           <TableRow key={holding.instrument}>
                             <TableCell className="font-medium">
                               <div>
