@@ -5,9 +5,21 @@ import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
+  title: 'Stock Portfolio Tracker',
+  description: 'Track your stock portfolio with real-time data and Zerodha Kite integration. Monitor holdings, P&L, and performance across multiple exchanges.',
+  keywords: ['stock tracker', 'portfolio management', 'zerodha', 'kite', 'real-time stocks', 'NSE', 'BSE', 'NASDAQ'],
+  authors: [{ name: 'Stock Portfolio Tracker' }],
+  openGraph: {
+    title: 'Stock Portfolio Tracker',
+    description: 'Track your stock portfolio with real-time data and Zerodha Kite integration',
+    type: 'website',
+    url: 'https://github.com/Greedy-Geek/stock-portfolio-tracker',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Stock Portfolio Tracker',
+    description: 'Track your stock portfolio with real-time data and Zerodha Kite integration',
+  },
 }
 
 export default function RootLayout({
