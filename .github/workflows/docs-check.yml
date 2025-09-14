@@ -107,10 +107,8 @@ jobs:
           node scripts/validate-docs.js
 
       - name: Check for broken links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        uses: tcort/markdown-link-check-action@v1
         with:
-          use-quiet-mode: "no"
-          use-verbose-mode: "yes"
           config-file: ".github/markdown-link-check-config.json"
 
       - name: Check documentation coverage
