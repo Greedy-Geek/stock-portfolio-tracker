@@ -198,7 +198,8 @@ curl "http://localhost:3000/api/kite/holdings"
       "averagePrice": 2400.0,
       "instrument": "738561",
       "source": "Zerodha Kite",
-      "lastUpdated": "2024-01-15T10:30:00.000Z"
+      "lastUpdated": "2024-01-15T10:30:00.000Z",
+      "weight": 61.00
     },
     {
       "ticker": "NSE:TCS",
@@ -212,7 +213,8 @@ curl "http://localhost:3000/api/kite/holdings"
       "averagePrice": 3200.0,
       "instrument": "2953217",
       "source": "Zerodha Kite",
-      "lastUpdated": "2024-01-15T10:30:00.000Z"
+      "lastUpdated": "2024-01-15T10:30:00.000Z",
+      "weight": 39.00
     }
   ],
   "totalValue": 401777.5,
@@ -247,6 +249,7 @@ curl "http://localhost:3000/api/kite/holdings"
 | `instrument`   | string | Kite instrument token                   |
 | `source`       | string | Data source identifier                  |
 | `lastUpdated`  | string | ISO timestamp                           |
+| `weight`       | number | Portfolio weight percentage (0-100)     |
 
 #### Error Responses
 

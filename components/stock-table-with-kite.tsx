@@ -37,6 +37,7 @@ export interface KiteHolding {
   instrument: string
   source: string
   lastUpdated: string
+  weight: number
 }
 
 // TypeScript interface for Kite API response
@@ -237,7 +238,14 @@ export function StockTableWithKite() {
       }
 
       if (data.success) {
-        setKiteHoldings(data.holdings)
+        // Calculate weights for each holding
+        const totalPortfolioValue = data.totalValue;
+        const holdingsWithWeights = data.holdings.map(holding => ({
+          ...holding,
+          weight: totalPortfolioValue > 0 ? (holding.value / totalPortfolioValue) * 100 : 0
+        }));
+        
+        setKiteHoldings(holdingsWithWeights)
       } else {
         setKiteError(data.error || "Failed to fetch holdings")
       }
@@ -490,6 +498,7 @@ export function StockTableWithKite() {
                           <TableHead>Value</TableHead>
                           <TableHead>P&L</TableHead>
                           <TableHead>P&L %</TableHead>
+                          <TableHead>Weight</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -520,6 +529,11 @@ export function StockTableWithKite() {
                               >
                                 {holding.pnlPercent >= 0 ? '+' : ''}{holding.pnlPercent.toFixed(2)}%
                               </Badge>
+                            </TableCell>
+                            <TableCell>
+                              <div className="font-semibold text-blue-600">
+                                {holding.weight.toFixed(2)}%
+                              </div>
                             </TableCell>
                           </TableRow>
                         ))}
