@@ -1,6 +1,33 @@
 # 📈 Stock Portfolio Tracker
 
+[![GitHub Stars](https://img.shields.io/github/stars/Greedy-Geek/stock-portfolio-tracker?style=social)](https://github.com/Greedy-Geek/stock-portfolio-tracker)
+[![GitHub Forks](https://img.shields.io/github/forks/Greedy-Geek/stock-portfolio-tracker?style=social)](https://github.com/Greedy-Geek/stock-portfolio-tracker)
+[![GitHub Issues](https://img.shields.io/github/issues/Greedy-Geek/stock-portfolio-tracker)](https://github.com/Greedy-Geek/stock-portfolio-tracker/issues)
+[![GitHub License](https://img.shields.io/github/license/Greedy-Geek/stock-portfolio-tracker)](https://github.com/Greedy-Geek/stock-portfolio-tracker/blob/main/LICENSE)
+
 A comprehensive Next.js application for tracking stock portfolios with real-time data integration, supporting both manual stock tracking and live broker portfolio synchronization.
+
+🔗 **GitHub Repository**: [https://github.com/Greedy-Geek/stock-portfolio-tracker](https://github.com/Greedy-Geek/stock-portfolio-tracker)
+
+## ⚡ Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/Greedy-Geek/stock-portfolio-tracker.git
+cd stock-portfolio-tracker
+
+# Install dependencies
+pnpm install
+
+# Set up environment variables
+cp env.template .env.local
+# Edit .env.local with your API keys
+
+# Run development server
+pnpm dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000) to see your stock portfolio tracker!
 
 ## 🌟 Features
 
@@ -370,6 +397,48 @@ interface KiteHolding {
 - Success/failure rates
 - Cache hit ratios
 - Source reliability metrics
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### Quick Contribution Steps
+
+1. **Fork the repository** on GitHub
+2. **Clone your fork**: `git clone https://github.com/YOUR-USERNAME/stock-portfolio-tracker.git`
+3. **Create a feature branch**: `git checkout -b feature/amazing-feature`
+4. **Make your changes** and test thoroughly
+5. **Commit with conventional format**: `git commit -m "feat: add amazing feature"`
+6. **Push to your fork**: `git push origin feature/amazing-feature`
+7. **Open a Pull Request** with a clear description
+
+### Development Setup
+
+```bash
+# Install dependencies
+pnpm install
+
+# Run development server
+pnpm dev
+
+# Run tests and linting
+pnpm lint
+pnpm type-check
+
+# Validate documentation
+pnpm docs:check
+
+# Clean up unused files
+pnpm cleanup
+```
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## ⭐ Show Your Support
+
+If this project helped you, please consider giving it a ⭐ on [GitHub](https://github.com/Greedy-Geek/stock-portfolio-tracker)!
 
 ## 🔮 Future Enhancements
 
