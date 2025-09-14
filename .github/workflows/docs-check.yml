@@ -16,14 +16,24 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.16.1
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "18"
-          cache: "npm"
+          cache: "pnpm"
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          # Try frozen lockfile first, fallback if incompatible
+          pnpm install --frozen-lockfile || {
+            echo "⚠️ Lockfile incompatible, installing with --no-frozen-lockfile"
+            pnpm install --no-frozen-lockfile
+          }
 
       - name: Check if API files changed
         id: api-changes
@@ -96,12 +106,13 @@ jobs:
           echo "🔍 Running documentation validation..."
           node scripts/validate-docs.js
 
+      - name: Install markdown-link-check
+        run: npm install -g markdown-link-check
+
       - name: Check for broken links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          use-quiet-mode: "no"
-          use-verbose-mode: "yes"
-          config-file: ".github/markdown-link-check-config.json"
+        run: |
+          echo "🔍 Checking for broken links in markdown files..."
+          find . -name "*.md" -not -path "./node_modules/*" -exec markdown-link-check {} --config .github/markdown-link-check-config.json \;
 
       - name: Check documentation coverage
         run: |

@@ -511,7 +511,13 @@ export function StockTableWithKite() {
                               </div>
                             </TableCell>
                             <TableCell>
-                              <Badge variant={holding.pnlPercent >= 0 ? 'default' : 'destructive'}>
+                              <Badge 
+                                className={
+                                  holding.pnlPercent >= 0 
+                                    ? 'bg-green-600 text-white border-transparent hover:bg-green-700' 
+                                    : 'bg-red-600 text-white border-transparent hover:bg-red-700'
+                                }
+                              >
                                 {holding.pnlPercent >= 0 ? '+' : ''}{holding.pnlPercent.toFixed(2)}%
                               </Badge>
                             </TableCell>

@@ -20,7 +20,9 @@ This guide will help you set up Zerodha Kite API integration to display your rea
    - **Description**: Brief description of your app
 
 5. **Submit**: After creation, you'll get:
+
    - **API Key** (Consumer Key)
+
    - **API Secret** (Consumer Secret)
 
 ## Step 2: Generate Access Token
@@ -168,7 +170,7 @@ For production deployment:
 
 - **Kite Connect Documentation**: [https://kite.trade/docs/connect/v3/](https://kite.trade/docs/connect/v3/)
 - **Zerodha Support**: Contact through Zerodha support channels
-- **API Status**: Check [https://status.zerodha.com/](https://status.zerodha.com/) for service status
+- **API Status**: Check Zerodha's main website or contact support for service status
 
 ---
 
