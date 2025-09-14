@@ -1,0 +1,81 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+
+# Check if API files changed and remind about docs
+if git diff --cached --name-only | grep -q "app/api/"; then
+  echo ""
+  echo "⚠️  API files changed. Please ensure you update:"
+  echo "   📡 API_DOCUMENTATION.md"
+  echo "   📚 README.md (if public API changed)"
+  echo "   🏗️  ARCHITECTURE.md (if data flow changed)"
+  echo ""
+fi
+
+# Check if components changed and remind about docs
+if git diff --cached --name-only | grep -q "components/\|app/page.tsx\|app/layout.tsx"; then
+  echo ""
+  echo "⚠️  Component files changed. Please ensure you update:"
+  echo "   📚 README.md (component documentation)"
+  echo "   🏗️  ARCHITECTURE.md (component hierarchy/data flow)"
+  echo ""
+fi
+
+# Check if config files changed
+if git diff --cached --name-only | grep -E "(next.config|package.json|tsconfig|vercel.json)" -q; then
+  echo ""
+  echo "⚠️  Configuration files changed. Please ensure you update:"
+  echo "   🚀 DEPLOYMENT.md (build/deployment configs)"
+  echo "   🤝 CONTRIBUTING.md (development setup)"
+  echo "   📚 README.md (if dependencies changed)"
+  echo ""
+fi
+
+# Check if environment variables were added/changed
+if git diff --cached --name-only | grep -q "\.env\|route\.ts"; then
+  echo ""
+  echo "⚠️  Environment or API files changed. Please ensure:"
+  echo "   📝 All new environment variables are documented"
+  echo "   🔐 Sensitive data is not committed"
+  echo "   📚 README.md includes setup instructions"
+  echo ""
+fi
+
+# Run documentation validation
+echo "📚 Validating documentation..."
+if [ -f "scripts/validate-docs.js" ]; then
+  node scripts/validate-docs.js
+  if [ $? -ne 0 ]; then
+    echo ""
+    echo "❌ Documentation validation failed!"
+    echo "   Please fix the issues above before committing."
+    echo "   See DOCUMENTATION_MAINTENANCE.md for guidance."
+    exit 1
+  fi
+else
+  echo "⚠️  Documentation validation script not found"
+fi
+
+# Run linting
+echo ""
+echo "🔍 Running ESLint..."
+pnpm lint
+if [ $? -ne 0 ]; then
+  echo "❌ Linting failed! Please fix the issues above."
+  exit 1
+fi
+
+# Run type checking
+echo ""
+echo "🔍 Running TypeScript type check..."
+pnpm type-check
+if [ $? -ne 0 ]; then
+  echo "❌ Type checking failed! Please fix the issues above."
+  exit 1
+fi
+
+echo ""
+echo "✅ All pre-commit checks passed!"
+echo "📚 Don't forget to update documentation if needed!"
+echo ""
