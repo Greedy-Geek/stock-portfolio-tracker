@@ -38,6 +38,7 @@ Visit [http://localhost:3000](http://localhost:3000) to see your stock portfolio
 - **Real-time Data**: Live stock prices from multiple API sources
 - **Multi-Exchange Support**: NSE, BSE, NASDAQ, NYSE, and international markets
 - **P&L Calculations**: Automatic profit/loss calculations with color coding
+- **Portfolio Weights**: View each holding's percentage of total portfolio value for better asset allocation insights
 
 ### 🎨 User Interface
 
