@@ -24,8 +24,8 @@ This document provides a detailed technical overview of the Stock Portfolio Trac
 │  /api/stock/[ticker]     │  /api/kite/holdings             │
 │  ├── Multi-source fetch  │  ├── Zerodha authentication     │
 │  ├── Exchange detection  │  ├── Portfolio data transform   │
-│  ├── Price caching      │  └── P&L calculations           │
-│  └── Error handling     │                                  │
+│  ├── Price caching      │  ├── P&L calculations           │
+│  └── Error handling     │  └── Weight calculations        │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
