@@ -199,7 +199,9 @@ curl "http://localhost:3000/api/kite/holdings"
       "instrument": "738561",
       "source": "Zerodha Kite",
       "lastUpdated": "2024-01-15T10:30:00.000Z",
-      "weight": 61.00
+      "weight": 61.0,
+      "marketCap": 1650000000000,
+      "sector": "Oil & Gas"
     },
     {
       "ticker": "NSE:TCS",
@@ -214,7 +216,9 @@ curl "http://localhost:3000/api/kite/holdings"
       "instrument": "2953217",
       "source": "Zerodha Kite",
       "lastUpdated": "2024-01-15T10:30:00.000Z",
-      "weight": 39.00
+      "weight": 39.0,
+      "marketCap": 1200000000000,
+      "sector": "Information Technology"
     }
   ],
   "totalValue": 401777.5,
@@ -235,21 +239,23 @@ curl "http://localhost:3000/api/kite/holdings"
 
 #### Holdings Object Fields
 
-| Field          | Type   | Description                             |
-| -------------- | ------ | --------------------------------------- |
-| `ticker`       | string | Full ticker (exchange:symbol)           |
-| `symbol`       | string | Stock symbol                            |
-| `exchange`     | string | Exchange identifier                     |
-| `price`        | number | Current market price                    |
-| `quantity`     | number | Number of shares held                   |
-| `value`        | number | Total position value (price × quantity) |
-| `pnl`          | number | Profit/Loss in currency                 |
-| `pnlPercent`   | number | Profit/Loss percentage                  |
-| `averagePrice` | number | Average purchase price                  |
-| `instrument`   | string | Kite instrument token                   |
-| `source`       | string | Data source identifier                  |
-| `lastUpdated`  | string | ISO timestamp                           |
-| `weight`       | number | Portfolio weight percentage (0-100)     |
+| Field          | Type   | Description                                |
+| -------------- | ------ | ------------------------------------------ |
+| `ticker`       | string | Full ticker (exchange:symbol)              |
+| `symbol`       | string | Stock symbol                               |
+| `exchange`     | string | Exchange identifier                        |
+| `price`        | number | Current market price                       |
+| `quantity`     | number | Number of shares held                      |
+| `value`        | number | Total position value (price × quantity)    |
+| `pnl`          | number | Profit/Loss in currency                    |
+| `pnlPercent`   | number | Profit/Loss percentage                     |
+| `averagePrice` | number | Average purchase price                     |
+| `instrument`   | string | Kite instrument token                      |
+| `source`       | string | Data source identifier                     |
+| `lastUpdated`  | string | ISO timestamp                              |
+| `weight`       | number | Portfolio weight percentage (0-100)        |
+| `marketCap`    | number | Market capitalization in rupees (optional) |
+| `sector`       | string | Industry sector (optional)                 |
 
 #### Error Responses
 

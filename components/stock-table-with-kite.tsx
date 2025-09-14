@@ -38,6 +38,8 @@ export interface KiteHolding {
   source: string
   lastUpdated: string
   weight: number
+  marketCap?: number
+  sector?: string
 }
 
 // TypeScript interface for Kite API response
@@ -160,6 +162,25 @@ export function StockTableWithKite() {
       </div>
     </TableHead>
   )
+
+  // Function to fetch market cap and sector data
+  const fetchScreenerData = async (symbol: string) => {
+    try {
+      const response = await fetch(`/api/stock/${symbol}/screener`);
+      const data = await response.json();
+      
+      if (data.success) {
+        return {
+          marketCap: data.marketCap,
+          sector: data.sector
+        };
+      }
+      return { marketCap: null, sector: 'Unknown' };
+    } catch (error) {
+      console.error(`Error fetching screener data for ${symbol}:`, error);
+      return { marketCap: null, sector: 'Unknown' };
+    }
+  }
 
   // Function to fetch stock price from our API
   const fetchStockPrice = async (ticker: string): Promise<{ price: number; error?: string; data?: any }> => {
@@ -311,7 +332,19 @@ export function StockTableWithKite() {
           weight: totalPortfolioValue > 0 ? (holding.value / totalPortfolioValue) * 100 : 0
         }));
         
-        setKiteHoldings(holdingsWithWeights)
+        // Fetch market cap and sector data for each holding
+        const holdingsWithScreenerData = await Promise.all(
+          holdingsWithWeights.map(async (holding) => {
+            const screenerData = await fetchScreenerData(holding.symbol);
+            return {
+              ...holding,
+              marketCap: screenerData.marketCap,
+              sector: screenerData.sector
+            };
+          })
+        );
+        
+        setKiteHoldings(holdingsWithScreenerData)
       } else {
         setKiteError(data.error || "Failed to fetch holdings")
       }
@@ -575,6 +608,8 @@ export function StockTableWithKite() {
                       <TableHeader>
                         <TableRow>
                           <TableHead>Stock</TableHead>
+                          <TableHead>Sector</TableHead>
+                          <TableHead>Market Cap</TableHead>
                           <TableHead>Quantity</TableHead>
                           <TableHead>Avg Price</TableHead>
                           <TableHead>Current Price</TableHead>
@@ -591,6 +626,21 @@ export function StockTableWithKite() {
                               <div>
                                 <div className="font-semibold">{holding.symbol}</div>
                                 <div className="text-sm text-muted-foreground">{holding.exchange}</div>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div className="text-sm">
+                                <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">
+                                  {holding.sector || 'Loading...'}
+                                </span>
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div className="text-sm font-medium">
+                                {holding.marketCap ? 
+                                  `₹${(holding.marketCap / 10000000).toFixed(0)}Cr` : 
+                                  'Loading...'
+                                }
                               </div>
                             </TableCell>
                             <TableCell>{holding.quantity}</TableCell>

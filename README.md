@@ -40,6 +40,7 @@ Visit [http://localhost:3000](http://localhost:3000) to see your stock portfolio
 - **P&L Calculations**: Automatic profit/loss calculations with color coding
 - **Portfolio Weights**: View each holding's percentage of total portfolio value for better asset allocation insights
 - **Advanced Sorting**: Sort holdings by Weight, P&L, or P&L% in ascending/descending order with visual indicators
+- **Market Intelligence**: View Market Cap and Sector information for each holding via Screener.in integration
 
 ### 🎨 User Interface
 
