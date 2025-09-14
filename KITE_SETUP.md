@@ -20,8 +20,9 @@ This guide will help you set up Zerodha Kite API integration to display your rea
    - **Description**: Brief description of your app
 
 5. **Submit**: After creation, you'll get:
+
    - **API Key** (Consumer Key)
-   
+
    - **API Secret** (Consumer Secret)
 
 ## Step 2: Generate Access Token
